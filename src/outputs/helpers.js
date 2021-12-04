@@ -59,7 +59,7 @@ const styledTagBuilder = (name) => {
 const childImportsBuilder = (DOM, folder, attributes) => {
   const imports = [];
 
-  if (folder === configGetAttribute('folders').pages || isParentComponent(attributes)) {
+  if ((folder === configGetAttribute('folders').pages || isParentComponent(attributes)) && DOM) {
     const domIterator = (dom) => {
       dom.forEach(({ attr, child }) => {
         const componentName = componentNameBuilder(attr);
@@ -138,7 +138,7 @@ const childTagBuilder = (folder, DOM, attributes, props) => {
   let lastDomString = false;
   let usedProps = [];
 
-  if (folder === configGetAttribute('folders').pages || isParentComponent(attributes)) {
+  if ((folder === configGetAttribute('folders').pages || isParentComponent(attributes)) && DOM) {
     const domIterator = (dom, level = 0) => {
       // eslint-disable-next-line complexity
       dom.forEach(({
