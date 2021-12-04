@@ -1,6 +1,7 @@
 import { attributesInjector } from '../../helpers/attributes'
 import file from '../../helpers/file'
 import { configGetAttribute } from '../../helpers/global'
+import { node } from '../../helpers/node'
 import {
   childImportsBuilder,
   childTagBuilder,
@@ -89,8 +90,8 @@ const reactNative = (name, folder, styles, attr, DOM) => {
 
   files.forEach(({ fileName, fileContent }) => {
     file.write(fileName, fileContent, filePath)
+    node(`npx prettier --write ${filePath}${fileName}`)
   })
-  // return filePath;
 }
 
 export default reactNative
