@@ -1,31 +1,38 @@
-import { isParentComponent } from "../helpers/attributes";
-import { configGetAttribute } from "../helpers/global";
-import { cleanString, isValidText, replaceAll, upperCaseFirstLetter } from "../helpers/string";
+import { isParentComponent } from '../helpers/attributes'
+import { configGetAttribute } from '../helpers/global'
+import {
+  cleanString,
+  isValidText,
+  replaceAll,
+  upperCaseFirstLetter
+} from '../helpers/string'
 
 export const fileObjectBuilder = (fileName, fileContent) => ({
   fileName,
-  fileContent: fileContent.join('\n'),
-});
+  fileContent: fileContent.join('\n')
+})
 
-export const styleBuilder = (styleObj) => {
-  let styles = '\n';
+export const styleBuilder = styleObj => {
+  let styles = '\n'
 
-  Object.keys(styleObj).forEach((property) => {
-    styles += `\t${property}: ${styleObj[property]};\n`;
-  });
+  Object.keys(styleObj).forEach(property => {
+    styles += `\t${property}: ${styleObj[property]};\n`
+  })
 
-  return styles;
-};
+  return styles
+}
 
-export const componentNameBuilder = (attribute) => (
-  (attribute && attribute.id) ? upperCaseFirstLetter(attribute.id) : null
-);
+export const componentNameBuilder = attribute =>
+  attribute && attribute.id ? upperCaseFirstLetter(attribute.id) : null
 
-const importPathBuilder = (componentName) => `import ${componentName} from '../../${configGetAttribute('folders').components}/${componentName}';`;
+const importPathBuilder = componentName =>
+  `import ${componentName} from '../../${
+    configGetAttribute('folders').components
+  }/${componentName}';`
 
 // need improve to convert html tags to reactNative tag
-export const styledTagBuilder = (name) => {
-  const { framework } = configGetAttribute('features');
+export const styledTagBuilder = name => {
+  const { framework } = configGetAttribute('features')
   const converter = {
     reactNative: {
       div: 'View',
@@ -43,132 +50,143 @@ export const styledTagBuilder = (name) => {
       input: 'TextInput',
       select: 'Picker',
       option: 'Picker',
-      textarea: 'TextInput',
-    },
-  };
-  return framework === 'reactNative' ? (converter[framework][name] || name) : name;
-};
+      textarea: 'TextInput'
+    }
+  }
+  return framework === 'reactNative' ? converter[framework][name] || name : name
+}
 
 export const childImportsBuilder = (DOM, folder, attributes) => {
-  const imports = [];
+  const imports = []
 
-  if ((folder === configGetAttribute('folders').pages || isParentComponent(attributes)) && DOM) {
-    const domIterator = (dom) => {
+  if (
+    (folder === configGetAttribute('folders').pages ||
+      isParentComponent(attributes)) &&
+    DOM
+  ) {
+    const domIterator = dom => {
       dom.forEach(({ attr, child }) => {
-        const componentName = componentNameBuilder(attr);
+        const componentName = componentNameBuilder(attr)
         if (componentName) {
-          const importPath = importPathBuilder(componentName);
+          const importPath = importPathBuilder(componentName)
           if (imports.indexOf(importPath) === -1) {
-            imports.push(importPath);
+            imports.push(importPath)
           }
 
           if (child && !isParentComponent(attr)) {
-            domIterator(child);
+            domIterator(child)
           }
         }
-      });
-    };
+      })
+    }
 
-    domIterator(DOM);
+    domIterator(DOM)
   }
 
-  const output = `${imports.join('\n')}\n`;
-  return imports ? output : '';
-};
+  const output = `${imports.join('\n')}\n`
+  return imports ? output : ''
+}
 
-const propFixName = (propName) => propName.substring(1, propName.length);
+const propFixName = propName => propName.substring(1, propName.length)
 
-export const destructPropsBuilder = (props) => props.map((prop) => `, ${prop}`).join('');
+export const destructPropsBuilder = props =>
+  props.map(prop => `, ${prop}`).join('')
 
-const propsInjector = (props) => props.map((prop) => ` ${prop}={${prop}}`).join('');
+const propsInjector = props => props.map(prop => ` ${prop}={${prop}}`).join('')
 
 const getChildProps = (childs, props) => {
-  let childProps = [];
+  let childProps = []
 
   childs.forEach(({ child, node, text }) => {
     if (node === 'text') {
-      props.forEach((prop) => {
+      props.forEach(prop => {
         if (text.indexOf(prop) !== -1) {
-          childProps.push(propFixName(prop));
+          childProps.push(propFixName(prop))
         }
-      });
+      })
     } else if (child !== undefined) {
-      childProps = [...childProps, ...getChildProps(child, props)];
+      childProps = [...childProps, ...getChildProps(child, props)]
     }
-  });
+  })
 
-  return childProps;
-};
+  return childProps
+}
 
 const propsReplacer = (string, props) => {
-  let result = string || '';
-  const childUsedProps = [];
+  let result = string || ''
+  const childUsedProps = []
 
-  props.forEach((prop) => {
+  props.forEach(prop => {
     if (result.indexOf(prop) !== -1) {
-      childUsedProps.push(propFixName(prop));
+      childUsedProps.push(propFixName(prop))
     }
-    result = replaceAll(result, prop, `{ ${propFixName(prop)} }`);
-  });
+    result = replaceAll(result, prop, `{ ${propFixName(prop)} }`)
+  })
 
-  return { childUsedProps, string: result };
-};
+  return { childUsedProps, string: result }
+}
 
-const indentationBuilder = (level) => {
-  let indentation = '\t\t';
+const indentationBuilder = level => {
+  let indentation = '\t\t'
 
   for (let i = 0; i < level; i += 1) {
-    indentation += '\t';
+    indentation += '\t'
   }
 
-  return indentation;
-};
+  return indentation
+}
 
-const tagBuilder = (tagName, close = false, props = '') => `<${close ? '/' : ''}${tagName}${props}>`;
+const tagBuilder = (tagName, close = false, props = '') =>
+  `<${close ? '/' : ''}${tagName}${props}>`
 
 export const childTagBuilder = (folder, DOM, attributes, props) => {
-  let JSX = '';
-  let lastDomString = false;
-  let usedProps = [];
+  let JSX = ''
+  let lastDomString = false
+  let usedProps = []
 
-  if ((folder === configGetAttribute('folders').pages || isParentComponent(attributes)) && DOM) {
+  if (
+    (folder === configGetAttribute('folders').pages ||
+      isParentComponent(attributes)) &&
+    DOM
+  ) {
     const domIterator = (dom, level = 0) => {
       // eslint-disable-next-line complexity
-      dom.forEach(({
-        attr = {}, child, text,
-      }, index) => {
-        const componentName = componentNameBuilder(attr);
+      dom.forEach(({ attr = {}, child, text }, index) => {
+        const componentName = componentNameBuilder(attr)
         if (componentName) {
           if (index) {
-            JSX += '\n';
+            JSX += '\n'
           }
-          JSX += indentationBuilder(level);
+          JSX += indentationBuilder(level)
 
-          let childUsedProps = [];
+          let childUsedProps = []
           if (isParentComponent(attr)) {
-            childUsedProps = getChildProps(child, props);
-            usedProps = [...usedProps, ...childUsedProps];
+            childUsedProps = getChildProps(child, props)
+            usedProps = [...usedProps, ...childUsedProps]
           }
-          JSX += tagBuilder(componentName, false, propsInjector(childUsedProps));
+          JSX += tagBuilder(componentName, false, propsInjector(childUsedProps))
 
           if (child && !isParentComponent(attr)) {
-            domIterator(child, level + 1);
-            JSX += lastDomString ? '' : `\n${indentationBuilder(level)}`;
-            lastDomString = false;
+            domIterator(child, level + 1)
+            JSX += lastDomString ? '' : `\n${indentationBuilder(level)}`
+            lastDomString = false
           }
 
-          JSX += tagBuilder(componentName, true);
+          JSX += tagBuilder(componentName, true)
         } else if (isValidText(text)) {
-          const { string, childUsedProps } = propsReplacer(cleanString(text), props);
-          JSX += string;
-          usedProps = [...usedProps, ...childUsedProps];
-          lastDomString = true;
+          const { string, childUsedProps } = propsReplacer(
+            cleanString(text),
+            props
+          )
+          JSX += string
+          usedProps = [...usedProps, ...childUsedProps]
+          lastDomString = true
         }
-      });
-    };
+      })
+    }
 
-    domIterator(DOM);
+    domIterator(DOM)
   }
 
-  return { usedProps, childJSX: JSX };
-};
+  return { usedProps, childJSX: JSX }
+}

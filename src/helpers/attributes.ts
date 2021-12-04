@@ -1,34 +1,35 @@
-import { reservedHTMLAttributesType } from "../types";
+import { reservedHTMLAttributesType } from '../types'
 
 const reservedHTMLAttributes: reservedHTMLAttributesType[] = [
   'kluser_props',
   'kluser_parent',
   'class',
-  'id',
-];
+  'id'
+]
 
 export const isReservedWords = (word: string): boolean => {
-  let result = false;
+  let result = false
 
-  reservedHTMLAttributes.forEach((reservedAttribute) => {
+  reservedHTMLAttributes.forEach(reservedAttribute => {
     if (word === reservedAttribute) {
-      result = true;
+      result = true
     }
-  });
+  })
 
-  return result;
-};
+  return result
+}
 
-export const isParentComponent = (attribute: any = {}) => attribute.kluser_parent !== undefined;
+export const isParentComponent = (attribute: any = {}) =>
+  attribute.kluser_parent !== undefined
 
 export const attributesInjector = (obj): string => {
-  let attributes = ''; // space from the tag name
+  let attributes = '' // space from the tag name
 
-  Object.keys(obj).forEach((property) => {
+  Object.keys(obj).forEach(property => {
     if (!isReservedWords(property)) {
-      attributes += `${property}="${obj[property]}" `;
+      attributes += `${property}="${obj[property]}" `
     }
-  });
+  })
 
-  return attributes ? ` ${attributes}` : '';
-};
+  return attributes ? ` ${attributes}` : ''
+}
