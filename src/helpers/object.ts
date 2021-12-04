@@ -1,4 +1,6 @@
+import { HtmlNode } from '../types'
 import file from './file'
+import { isValidText } from './string'
 
 const { html2json } = require('html2json')
 const css2json = require('css2json')
@@ -98,6 +100,19 @@ const styleInjector = (obj, styles) => {
   }
 }
 
+const cleanDataObject = (data: HtmlNode[]): HtmlNode[] => {
+  let localData = data
+
+  localData = localData.filter(
+    ({ node, text }) => node === 'element' || isValidText(text)
+  )
+  localData.forEach(({ child = [] }, index) => {
+    localData[index].child = cleanDataObject(child)
+  })
+
+  return localData
+}
+
 export const getData = () => {
   const files = {
     html: file.read('./kluser/index.html'),
@@ -110,5 +125,5 @@ export const getData = () => {
 
   styleInjector(bodyContent, cssContent)
 
-  return bodyContent.child
+  return cleanDataObject(bodyContent.child)
 }
