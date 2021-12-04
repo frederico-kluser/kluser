@@ -1,10 +1,10 @@
-let interval;
+let interval
 
 const enums = {
   COLOR: {
     BLACK: '#020204',
     GREEN: '#204829',
-    TRANSPARENT: 'transparent',
+    TRANSPARENT: 'transparent'
   },
   CHARACTERS: [
     '｢',
@@ -101,136 +101,137 @@ const enums = {
     'W',
     'X',
     'Y',
-    'Z',
-  ],
-};
+    'Z'
+  ]
+}
 
 // -----------------------------------------------------------------------------
 
-const { columns } = process.stdout;
+const { columns } = process.stdout
 // const { columns, rows } = process.stdout;
-const rows = 10;
-const { CHARACTERS, COLOR } = enums;
+const rows = 10
+const { CHARACTERS, COLOR } = enums
 
-const getProbability = (percent = 0) => percent > Math.floor(Math.random() * 100) + 1;
-const getRandomNumber = (limit = 0) => Math.floor(Math.random() * limit);
-const getRandomCharacter = () => CHARACTERS[getRandomNumber(CHARACTERS.length)];
+const getProbability = (percent = 0) =>
+  percent > Math.floor(Math.random() * 100) + 1
+const getRandomNumber = (limit = 0) => Math.floor(Math.random() * limit)
+const getRandomCharacter = () => CHARACTERS[getRandomNumber(CHARACTERS.length)]
 
-const matrixArrDraw = [];
+const matrixArrDraw = []
 
 class Matrix {
-  column: any;
-  row: any;
-  life: number;
-  letter: string;
-  color: string;
+  column: any
+  row: any
+  life: number
+  letter: string
+  color: string
 
   constructor(row, column) {
-    this.column = column;
-    this.row = row;
-    this.life = rows;
-    this.letter = ' ';
-    this.color = COLOR.TRANSPARENT;
+    this.column = column
+    this.row = row
+    this.life = rows
+    this.letter = ' '
+    this.color = COLOR.TRANSPARENT
 
     if (!this.row) {
-      this.changeLetter(2);
+      this.changeLetter(2)
     }
   }
 
   changeLetter(probability = 100) {
     if (getProbability(probability)) {
-      this.letter = getRandomCharacter();
-      this.color = COLOR.GREEN;
+      this.letter = getRandomCharacter()
+      this.color = COLOR.GREEN
     }
   }
 
   // eslint-disable-next-line complexity
   passTime() {
     if (!this.life) {
-      this.delete();
+      this.delete()
     } else if (this.letter !== ' ') {
-      this.life -= 1;
-      this.changeLetter(5);
+      this.life -= 1
+      this.changeLetter(5)
     } else if (!this.row) {
-      let allColumnEmpty = true;
+      let allColumnEmpty = true
 
       for (let row = 0; row < rows; row += 1) {
         if (matrixArrDraw[row][this.column].letter !== ' ') {
-          allColumnEmpty = false;
+          allColumnEmpty = false
         }
       }
 
       if (allColumnEmpty) {
-        this.changeLetter(2);
+        this.changeLetter(2)
       }
     } else if (matrixArrDraw[this.row - 1][this.column].letter !== ' ') {
-      this.changeLetter();
+      this.changeLetter()
     }
   }
 
   delete() {
-    this.life = rows;
-    this.letter = ' ';
+    this.life = rows
+    this.letter = ' '
   }
 }
 
 const generateOutput = () => {
-  console.clear();
-  let draw = '';
+  console.clear()
+  let draw = ''
 
-  matrixArrDraw.forEach((line) => {
-    line.forEach((character) => {
-      draw += character.letter;
-    });
-    draw += '\n';
-  });
+  matrixArrDraw.forEach(line => {
+    line.forEach(character => {
+      draw += character.letter
+    })
+    draw += '\n'
+  })
 
-  console.log(draw);
-};
+  console.log(draw)
+}
 
 const changeCharacter = () => {
   for (let row = rows - 1; row >= 0; row -= 1) {
     for (let colum = 0; colum < columns; colum += 1) {
-      matrixArrDraw[row][colum].passTime();
+      matrixArrDraw[row][colum].passTime()
     }
   }
 
-  generateOutput();
-};
+  generateOutput()
+}
 
-let globalExecute = false;
-const executeCheck = (execute) => {
+let globalExecute = false
+const executeCheck = execute => {
   if (execute && !globalExecute) {
-    globalExecute = true;
-    return true;
+    globalExecute = true
+    return true
   }
 
   if (globalExecute) {
-    clearInterval(interval);
-    console.clear();
-    globalExecute = false;
+    clearInterval(interval)
+    console.clear()
+    globalExecute = false
   }
 
-  return false;
-};
+  return false
+}
 
 const matrixRain = (execute = true) => {
   if (executeCheck(execute)) {
     if (!matrixArrDraw.length) {
       for (let row = 0; row < rows; row += 1) {
-        matrixArrDraw.push([]);
+        matrixArrDraw.push([])
         for (let colum = 0; colum < columns; colum += 1) {
-          matrixArrDraw[row].push(new Matrix(row, colum));
+          matrixArrDraw[row].push(new Matrix(row, colum))
         }
       }
 
-      generateOutput();
+      generateOutput()
     }
 
     interval = setInterval(() => {
-      changeCharacter();
-    }, 150);
+      changeCharacter()
+    }, 150)
   }
-};
+}
 
-export default matrixRain;
+export default matrixRain
