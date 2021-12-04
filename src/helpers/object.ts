@@ -113,7 +113,7 @@ const cleanDataObject = (data: HtmlNode[]): HtmlNode[] => {
   return localData
 }
 
-export const getData = () => {
+export const getData = (): HtmlNode[] => {
   const files = {
     html: file.read('./kluser/index.html'),
     css: file.read('./kluser/style.css')
@@ -121,9 +121,11 @@ export const getData = () => {
   const bodyContent = getSpecificHtmlNode(html2json(files.html), {
     tag: 'body'
   })
-  const cssContent = css2json(files.css)
 
+  const cssContent = css2json(files.css)
   styleInjector(bodyContent, cssContent)
 
-  return cleanDataObject(bodyContent.child)
+  const cleanedData = cleanDataObject(bodyContent.child)
+
+  return cleanedData
 }

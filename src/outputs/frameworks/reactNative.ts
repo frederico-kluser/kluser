@@ -5,22 +5,16 @@ import {
   childImportsBuilder,
   childTagBuilder,
   componentNameBuilder,
-  destructPropsBuilder,
   fileObjectBuilder,
   styleBuilder,
   styledTagBuilder
 } from '../helpers'
 
-const reactNative = (name, folder = 'ui', styles, attr, DOM, props) => {
+const reactNative = (name, folder, styles, attr, DOM) => {
   const componentName = componentNameBuilder(attr)
-  const { source, pages } = configGetAttribute('folders')
+  const { source } = configGetAttribute('folders')
   const { jest, storybook } = configGetAttribute('features')
-  const { childJSX, usedProps } = childTagBuilder(folder, DOM, attr, props)
-
-  let passingProps = []
-  if (folder === pages || attr.kluser_parent !== undefined) {
-    passingProps = usedProps
-  }
+  const { childJSX } = childTagBuilder(folder, DOM, attr)
 
   const filePath = `${source}/${folder}/${componentName}/`
   const files = [
@@ -43,9 +37,7 @@ const reactNative = (name, folder = 'ui', styles, attr, DOM, props) => {
       childImportsBuilder(DOM, folder, attr),
       `import Container from './${componentName}.styled';`,
       '',
-      `const ${componentName} = ({ children${destructPropsBuilder(
-        passingProps
-      )} }) => (`,
+      `const ${componentName} = ({ children }) => (`,
       `\t<Container${attributesInjector(attr)}>${childJSX}`,
       '\t\t{ children }',
       '\t</Container>',

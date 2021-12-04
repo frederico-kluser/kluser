@@ -3,7 +3,6 @@ import { configGetAttribute } from '../helpers/global'
 import {
   cleanString,
   isValidText,
-  replaceAll,
   upperCaseFirstLetter
 } from '../helpers/string'
 
@@ -87,100 +86,28 @@ export const childImportsBuilder = (DOM, folder, attributes) => {
   return imports ? output : ''
 }
 
-const propFixName = propName => propName.substring(1, propName.length)
+const tagBuilder = (tagName, close) => `<${close ? '/' : ''}${tagName}>`
 
-export const destructPropsBuilder = props =>
-  props.map(prop => `, ${prop}`).join('')
-
-const propsInjector = props => props.map(prop => ` ${prop}={${prop}}`).join('')
-
-const getChildProps = (childs, props) => {
-  let childProps = []
-
-  childs.forEach(({ child, node, text }) => {
-    if (node === 'text') {
-      props.forEach(prop => {
-        if (text.indexOf(prop) !== -1) {
-          childProps.push(propFixName(prop))
-        }
-      })
-    } else if (child !== undefined) {
-      childProps = [...childProps, ...getChildProps(child, props)]
-    }
-  })
-
-  return childProps
-}
-
-const propsReplacer = (string, props) => {
-  let result = string || ''
-  const childUsedProps = []
-
-  props.forEach(prop => {
-    if (result.indexOf(prop) !== -1) {
-      childUsedProps.push(propFixName(prop))
-    }
-    result = replaceAll(result, prop, `{ ${propFixName(prop)} }`)
-  })
-
-  return { childUsedProps, string: result }
-}
-
-const indentationBuilder = level => {
-  let indentation = '\t\t'
-
-  for (let i = 0; i < level; i += 1) {
-    indentation += '\t'
-  }
-
-  return indentation
-}
-
-const tagBuilder = (tagName, close = false, props = '') =>
-  `<${close ? '/' : ''}${tagName}${props}>`
-
-export const childTagBuilder = (folder, DOM, attributes, props) => {
+export const childTagBuilder = (folder, DOM, attributes) => {
   let JSX = ''
-  let lastDomString = false
-  let usedProps = []
 
   if (
     (folder === configGetAttribute('folders').pages ||
       isParentComponent(attributes)) &&
     DOM
   ) {
-    const domIterator = (dom, level = 0) => {
+    const domIterator = dom => {
       // eslint-disable-next-line complexity
-      dom.forEach(({ attr = {}, child, text }, index) => {
+      dom.forEach(({ attr = {}, child, text }) => {
         const componentName = componentNameBuilder(attr)
         if (componentName) {
-          if (index) {
-            JSX += '\n'
-          }
-          JSX += indentationBuilder(level)
-
-          let childUsedProps = []
-          if (isParentComponent(attr)) {
-            childUsedProps = getChildProps(child, props)
-            usedProps = [...usedProps, ...childUsedProps]
-          }
-          JSX += tagBuilder(componentName, false, propsInjector(childUsedProps))
-
+          JSX += tagBuilder(componentName, false)
           if (child && !isParentComponent(attr)) {
-            domIterator(child, level + 1)
-            JSX += lastDomString ? '' : `\n${indentationBuilder(level)}`
-            lastDomString = false
+            domIterator(child)
           }
-
           JSX += tagBuilder(componentName, true)
         } else if (isValidText(text)) {
-          const { string, childUsedProps } = propsReplacer(
-            cleanString(text),
-            props
-          )
-          JSX += string
-          usedProps = [...usedProps, ...childUsedProps]
-          lastDomString = true
+          JSX += cleanString(text)
         }
       })
     }
@@ -188,5 +115,5 @@ export const childTagBuilder = (folder, DOM, attributes, props) => {
     domIterator(DOM)
   }
 
-  return { usedProps, childJSX: JSX }
+  return { childJSX: JSX }
 }
