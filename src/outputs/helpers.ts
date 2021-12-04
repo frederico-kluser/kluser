@@ -1,10 +1,8 @@
-const { isParentComponent } = require('../helpers/attributes');
-const { configGetAttribute } = require('../helpers/global');
-const {
-  isValidText, cleanString, upperCaseFirstLetter, replaceAll,
-} = require('../helpers/string');
+import { isParentComponent } from "../helpers/attributes";
+import { configGetAttribute } from "../helpers/global";
+import { cleanString, isValidText, replaceAll, upperCaseFirstLetter } from "../helpers/string";
 
-const fileObjectBuilder = (fileName, fileContent) => {
+export const fileObjectBuilder = (fileName, fileContent) => {
   // eslint-disable-next-line no-param-reassign
   fileContent = fileContent.join('\n');
 
@@ -14,7 +12,7 @@ const fileObjectBuilder = (fileName, fileContent) => {
   });
 };
 
-const styleBuilder = (styleObj) => {
+export const styleBuilder = (styleObj) => {
   let styles = '\n';
 
   Object.keys(styleObj).forEach((property) => {
@@ -24,14 +22,14 @@ const styleBuilder = (styleObj) => {
   return styles;
 };
 
-const componentNameBuilder = (attribute) => (
+export const componentNameBuilder = (attribute) => (
   (attribute && attribute.id) ? upperCaseFirstLetter(attribute.id) : null
 );
 
 const importPathBuilder = (componentName) => `import ${componentName} from '../../${configGetAttribute('folders').components}/${componentName}';`;
 
 // need improve to convert html tags to reactNative tag
-const styledTagBuilder = (name) => {
+export const styledTagBuilder = (name) => {
   const { framework } = configGetAttribute('features');
   const converter = {
     reactNative: {
@@ -56,7 +54,7 @@ const styledTagBuilder = (name) => {
   return framework === 'reactNative' ? (converter[framework][name] || name) : name;
 };
 
-const childImportsBuilder = (DOM, folder, attributes) => {
+export const childImportsBuilder = (DOM, folder, attributes) => {
   const imports = [];
 
   if ((folder === configGetAttribute('folders').pages || isParentComponent(attributes)) && DOM) {
@@ -85,7 +83,7 @@ const childImportsBuilder = (DOM, folder, attributes) => {
 
 const propFixName = (propName) => propName.substring(1, propName.length);
 
-const destructPropsBuilder = (props) => props.map((prop) => `, ${prop}`).join('');
+export const destructPropsBuilder = (props) => props.map((prop) => `, ${prop}`).join('');
 
 const propsInjector = (props) => props.map((prop) => ` ${prop}={${prop}}`).join('');
 
@@ -133,7 +131,7 @@ const indentationBuilder = (level) => {
 
 const TagBuilder = (tagName, close = false, props = '') => `<${close ? '/' : ''}${tagName}${props}>`;
 
-const childTagBuilder = (folder, DOM, attributes, props) => {
+export const childTagBuilder = (folder, DOM, attributes, props) => {
   let JSX = '';
   let lastDomString = false;
   let usedProps = [];
@@ -178,14 +176,4 @@ const childTagBuilder = (folder, DOM, attributes, props) => {
   }
 
   return { childJSX: JSX, usedProps };
-};
-
-module.exports = {
-  childImportsBuilder,
-  childTagBuilder,
-  componentNameBuilder,
-  fileObjectBuilder,
-  destructPropsBuilder,
-  styleBuilder,
-  styledTagBuilder,
 };

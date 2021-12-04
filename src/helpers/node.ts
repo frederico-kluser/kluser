@@ -1,11 +1,11 @@
 import file from './file';
+import matrix from './matrix';
 
 const { cwd } = require('process');
 const inquirer = require('inquirer');
 const { exec } = require('child_process'); // have problems to use yarn
-const matrixRain = require('./matrix');
 
-const node = (command = 'ls -la') => {
+export const node = async (command = 'ls -la') => {
   const promise = new Promise((resolve, reject) => {
     exec(command, (error, stdout, stderr) => {
       if (error) {
@@ -23,7 +23,7 @@ const node = (command = 'ls -la') => {
   return promise;
 };
 
-const prompt = async (message = 'Choose an option', type = 'input', choices = []) => {
+export const prompt = async (message = 'Choose an option', type = 'input', choices = []) => {
   const promise = new Promise((resolve, reject) => {
     inquirer
       .prompt([
@@ -40,10 +40,10 @@ const prompt = async (message = 'Choose an option', type = 'input', choices = []
   return promise;
 };
 
-const npmExec = async (commands) => {
+export const npmExec = async (commands) => {
   let response: any = '';
   console.clear();
-  matrixRain();
+  matrix();
   try {
     if (typeof commands === 'string') {
       response = await node(commands);
@@ -57,7 +57,7 @@ const npmExec = async (commands) => {
     response = e;
   }
 
-  matrixRain(false);
+  matrix(false);
   console.log(response);
 
   return response;
@@ -73,7 +73,7 @@ const packageJsonConfig = async () => {
   write('package.json', JSON.stringify(packageJson), `${cwd()}/`);
 };
 
-const setupProject = async () => {
+export const setupProject = async () => {
   const framework = await prompt('Choose an framework', 'list', ['react', 'reactNative']);
   const allFeatures = ['jest', 'storybook'];
   const arrFeatures: any = await prompt('Choose the features', 'checkbox', allFeatures);
@@ -93,8 +93,4 @@ const setupProject = async () => {
   write('index.html', html, `${cwd()}/kluser/`);
   write('style.css', css, `${cwd()}/kluser/`);
   write('/.kluser.json', kluser, `${cwd()}/kluser/`);
-};
-
-module.exports = {
-  node, prompt, matrixRain, npmExec, setupProject,
 };

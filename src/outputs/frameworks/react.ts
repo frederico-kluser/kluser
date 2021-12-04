@@ -1,16 +1,7 @@
+import { attributesInjector } from '../../helpers/attributes';
 import file from '../../helpers/file';
-
-const { attributesInjector } = require('../../helpers/attributes');
-const { configGetAttribute } = require('../../helpers/global');
-const {
-  childImportsBuilder,
-  childTagBuilder,
-  componentNameBuilder,
-  fileObjectBuilder,
-  styleBuilder,
-  styledTagBuilder,
-  destructPropsBuilder,
-} = require('../helpers');
+import { configGetAttribute } from '../../helpers/global';
+import { childImportsBuilder, childTagBuilder, componentNameBuilder, destructPropsBuilder, fileObjectBuilder, styleBuilder, styledTagBuilder } from '../helpers';
 
 const react = (name, folder = 'ui', styles, attr, DOM, props) => {
   const componentName = componentNameBuilder(attr);
@@ -93,4 +84,4 @@ const react = (name, folder = 'ui', styles, attr, DOM, props) => {
   // return filePath;
 };
 
-module.exports = react;
+export default react;

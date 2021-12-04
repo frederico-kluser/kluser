@@ -119,6 +119,12 @@ const getRandomCharacter = () => CHARACTERS[getRandomNumber(CHARACTERS.length)];
 const MatrixArrDraw = [];
 
 class Matrix {
+  column: any;
+  row: any;
+  life: number;
+  letter: string;
+  color: string;
+
   constructor(row, column) {
     this.column = column;
     this.row = row;
@@ -227,4 +233,4 @@ const matrixRain = (execute = true) => {
   }
 };
 
-module.exports = matrixRain;
+export default matrixRain;

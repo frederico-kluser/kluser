@@ -1,14 +1,10 @@
-
+import { checkEqualObjects, getData } from './../helpers/object';
 import { GluegunCommand } from 'gluegun';
 import file from '../helpers/file';
-
-const { cwd } = require('process');
-const { prompt, setupProject } = require('../helpers/node');
-const { configSetter, configGetAttribute } = require('../helpers/global');
-const { getData, checkEqualObjects } = require('../helpers/object');
-const filterTags = require('../pageBuilder');
-const matrixRain = require('../helpers/matrix');
-
+import { configGetAttribute, configSetter } from '../helpers/global';
+import matrix from '../helpers/matrix';
+import { prompt, setupProject } from '../helpers/node';
+import filterTags from '../pageBuilder';
 
 const questions = {
   'Render project': async () => {
@@ -19,7 +15,7 @@ const questions = {
     filterTags(child, configGetAttribute('folders').pages);
   },
   'Live preview': () => {
-    matrixRain();
+    matrix();
     let childBackup = {};
     setInterval(async () => {
       const { child } = getData();
@@ -41,10 +37,10 @@ const command: GluegunCommand = {
       await setupProject();
     }
   
-    const config = file.read(`${cwd()}/kluser/.kluser.json`);
+    const config = file.read('./kluser/.kluser.json');
     configSetter(config);
   
-    const main = await prompt('Choose an option', 'list', Object.keys(questions));
+    const main: any = await prompt('Choose an option', 'list', Object.keys(questions));
     questions[main]();
   },
 }

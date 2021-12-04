@@ -1,16 +1,7 @@
+import { attributesInjector } from '../../helpers/attributes';
 import file from '../../helpers/file';
-
-const { attributesInjector } = require('../../helpers/attributes');
-const { configGetAttribute } = require('../../helpers/global');
-const {
-  childImportsBuilder,
-  childTagBuilder,
-  componentNameBuilder,
-  fileObjectBuilder,
-  styleBuilder,
-  destructPropsBuilder,
-  styledTagBuilder,
-} = require('../helpers');
+import { configGetAttribute } from '../../helpers/global';
+import { childImportsBuilder, childTagBuilder, componentNameBuilder, destructPropsBuilder, fileObjectBuilder, styleBuilder, styledTagBuilder } from '../helpers';
 
 const reactNative = (name, folder = 'ui', styles, attr, DOM, props) => {
   const componentName = componentNameBuilder(attr);
@@ -94,4 +85,4 @@ const reactNative = (name, folder = 'ui', styles, attr, DOM, props) => {
   // return filePath;
 };
 
-module.exports = reactNative;
+export default reactNative;
