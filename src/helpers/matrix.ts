@@ -116,9 +116,15 @@ const getProbability = (percent = 0) => percent > Math.floor(Math.random() * 100
 const getRandomNumber = (limit = 0) => Math.floor(Math.random() * limit);
 const getRandomCharacter = () => CHARACTERS[getRandomNumber(CHARACTERS.length)];
 
-const MatrixArrDraw = [];
+const matrixArrDraw = [];
 
 class Matrix {
+  column: any;
+  row: any;
+  life: number;
+  letter: string;
+  color: string;
+
   constructor(row, column) {
     this.column = column;
     this.row = row;
@@ -149,7 +155,7 @@ class Matrix {
       let allColumnEmpty = true;
 
       for (let row = 0; row < rows; row += 1) {
-        if (MatrixArrDraw[row][this.column].letter !== ' ') {
+        if (matrixArrDraw[row][this.column].letter !== ' ') {
           allColumnEmpty = false;
         }
       }
@@ -157,7 +163,7 @@ class Matrix {
       if (allColumnEmpty) {
         this.changeLetter(2);
       }
-    } else if (MatrixArrDraw[this.row - 1][this.column].letter !== ' ') {
+    } else if (matrixArrDraw[this.row - 1][this.column].letter !== ' ') {
       this.changeLetter();
     }
   }
@@ -172,7 +178,7 @@ const generateOutput = () => {
   console.clear();
   let draw = '';
 
-  MatrixArrDraw.forEach((line) => {
+  matrixArrDraw.forEach((line) => {
     line.forEach((character) => {
       draw += character.letter;
     });
@@ -185,7 +191,7 @@ const generateOutput = () => {
 const changeCharacter = () => {
   for (let row = rows - 1; row >= 0; row -= 1) {
     for (let colum = 0; colum < columns; colum += 1) {
-      MatrixArrDraw[row][colum].passTime();
+      matrixArrDraw[row][colum].passTime();
     }
   }
 
@@ -210,11 +216,11 @@ const executeCheck = (execute) => {
 
 const matrixRain = (execute = true) => {
   if (executeCheck(execute)) {
-    if (!MatrixArrDraw.length) {
+    if (!matrixArrDraw.length) {
       for (let row = 0; row < rows; row += 1) {
-        MatrixArrDraw.push([]);
+        matrixArrDraw.push([]);
         for (let colum = 0; colum < columns; colum += 1) {
-          MatrixArrDraw[row].push(new Matrix(row, colum));
+          matrixArrDraw[row].push(new Matrix(row, colum));
         }
       }
 
@@ -227,4 +233,4 @@ const matrixRain = (execute = true) => {
   }
 };
 
-module.exports = matrixRain;
+export default matrixRain;

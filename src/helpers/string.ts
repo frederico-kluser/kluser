@@ -1,8 +1,8 @@
-const upperCaseFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+export const upperCaseFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
-const capitalize = (string) => string.charAt(0).toUpperCase() + (string.slice(1)).toLowerCase();
+export const capitalize = (string) => string.charAt(0).toUpperCase() + (string.slice(1)).toLowerCase();
 
-const isValidText = (str = '') => {
+export const isValidText = (str = '') => {
   let boolean = false;
   const arr = str.split('');
   const nullCharacters = [' ', '\n', '\t'];
@@ -16,7 +16,7 @@ const isValidText = (str = '') => {
   return boolean;
 };
 
-const cleanString = (string) => {
+export const cleanString = (string) => {
   let lastPosition = string.length;
   const invalidCharacters = ['\n', '\t', ' '];
 
@@ -32,13 +32,4 @@ const cleanString = (string) => {
 };
 
 const escapeRegExp = (string) => string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
-
-const replaceAll = (str, find, replace) => str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
-
-module.exports = {
-  capitalize,
-  cleanString,
-  isValidText,
-  replaceAll,
-  upperCaseFirstLetter,
-};
+export const replaceAll = (str, find, replace) => str.replace(new RegExp(escapeRegExp(find), 'g'), replace);

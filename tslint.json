@@ -1,7 +1,8 @@
 {
   "extends": ["tslint-config-airbnb", "tslint-config-prettier"],
   "rules": {
-    "strict-type-predicates": false
+    "strict-type-predicates": false,
+    "import-name": false
   },
   "env": {
     "jest": true

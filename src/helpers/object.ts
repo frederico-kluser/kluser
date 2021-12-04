@@ -1,10 +1,9 @@
-/* eslint-disable no-param-reassign */
 import file from './file';
 
 const { html2json } = require('html2json');
 const css2json = require('css2json');
 
-const checkEqualObjects = (obj1, obj2) => JSON.stringify(obj1) === JSON.stringify(obj2);
+export const checkEqualObjects = (obj1, obj2) => JSON.stringify(obj1) === JSON.stringify(obj2);
 
 const checkHtmlNode = (obj, propertyRules) => {
   let findProperty = true;
@@ -53,17 +52,17 @@ const getStyleAttributes = (style = {}, globalStyles, attribute, type = 'class')
     id: '#',
   };
 
+  let localStyle = style;
+
   if (typeof attribute === 'string') {
-    // tslint:disable-next-line: no-parameter-reassignment
-    style = { ...style, ...globalStyles[`${symbols[type]}${attribute}`] };
+    localStyle = { ...style, ...globalStyles[`${symbols[type]}${attribute}`] };
   } else {
     attribute.forEach((attr) => {
-      // tslint:disable-next-line: no-parameter-reassignment
-      style = { ...style, ...globalStyles[`${symbols[type]}${attr}`] };
+      localStyle = { ...style, ...globalStyles[`${symbols[type]}${attr}`] };
     });
   }
 
-  return style;
+  return localStyle;
 };
 
 // eslint-disable-next-line complexity
@@ -90,7 +89,7 @@ const styleInjector = (obj, styles) => {
   }
 };
 
-const getData = () => {
+export const getData = () => {
   const files = {
     html: file.read('./kluser/index.html'),
     css: file.read('./kluser/style.css'),
@@ -100,9 +99,5 @@ const getData = () => {
 
   styleInjector(bodyContent, cssContent);
 
-  return bodyContent;
-};
-
-module.exports = {
-  checkEqualObjects, checkHtmlNode, getData, getSpecificHtmlNode,
+  return bodyContent.child;
 };

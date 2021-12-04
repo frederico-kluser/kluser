@@ -1,20 +1,18 @@
-/* eslint-disable max-len */
-/* eslint-disable no-use-before-define */
-
-const { configGetAttribute } = require('../helpers/global');
-const { elementBuilder } = require('../outputs');
+import { configGetAttribute } from "../helpers/global";
+import elementBuilder from "../outputs";
 
 const elementCreator = ({
   attr = {}, child, props = [], style = {}, tag, type,
-}) => {
+}: any) => {
+  let localProps = props;
+
   if (attr.kluser_props) {
-    // eslint-disable-next-line no-param-reassign
-    props = attr.kluser_props.split(';');
+    localProps = attr.kluser_props.split(';');
   }
 
   if (child) {
     child.forEach((element) => {
-      filterTags({ ...element, props });
+      filterTags({ ...element, localProps });
     });
   }
 
@@ -34,4 +32,4 @@ const filterTags = (parentElement, type = configGetAttribute('folders').componen
   }
 };
 
-module.exports = filterTags;
+export default filterTags;

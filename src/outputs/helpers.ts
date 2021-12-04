@@ -1,20 +1,13 @@
-const { isParentComponent } = require('../helpers/attributes');
-const { configGetAttribute } = require('../helpers/global');
-const {
-  isValidText, cleanString, upperCaseFirstLetter, replaceAll,
-} = require('../helpers/string');
+import { isParentComponent } from "../helpers/attributes";
+import { configGetAttribute } from "../helpers/global";
+import { cleanString, isValidText, replaceAll, upperCaseFirstLetter } from "../helpers/string";
 
-const fileObjectBuilder = (fileName, fileContent) => {
-  // eslint-disable-next-line no-param-reassign
-  fileContent = fileContent.join('\n');
+export const fileObjectBuilder = (fileName, fileContent) => ({
+  fileName,
+  fileContent: fileContent.join('\n'),
+});
 
-  return ({
-    fileName,
-    fileContent,
-  });
-};
-
-const styleBuilder = (styleObj) => {
+export const styleBuilder = (styleObj) => {
   let styles = '\n';
 
   Object.keys(styleObj).forEach((property) => {
@@ -24,14 +17,14 @@ const styleBuilder = (styleObj) => {
   return styles;
 };
 
-const componentNameBuilder = (attribute) => (
+export const componentNameBuilder = (attribute) => (
   (attribute && attribute.id) ? upperCaseFirstLetter(attribute.id) : null
 );
 
 const importPathBuilder = (componentName) => `import ${componentName} from '../../${configGetAttribute('folders').components}/${componentName}';`;
 
 // need improve to convert html tags to reactNative tag
-const styledTagBuilder = (name) => {
+export const styledTagBuilder = (name) => {
   const { framework } = configGetAttribute('features');
   const converter = {
     reactNative: {
@@ -56,7 +49,7 @@ const styledTagBuilder = (name) => {
   return framework === 'reactNative' ? (converter[framework][name] || name) : name;
 };
 
-const childImportsBuilder = (DOM, folder, attributes) => {
+export const childImportsBuilder = (DOM, folder, attributes) => {
   const imports = [];
 
   if ((folder === configGetAttribute('folders').pages || isParentComponent(attributes)) && DOM) {
@@ -85,7 +78,7 @@ const childImportsBuilder = (DOM, folder, attributes) => {
 
 const propFixName = (propName) => propName.substring(1, propName.length);
 
-const destructPropsBuilder = (props) => props.map((prop) => `, ${prop}`).join('');
+export const destructPropsBuilder = (props) => props.map((prop) => `, ${prop}`).join('');
 
 const propsInjector = (props) => props.map((prop) => ` ${prop}={${prop}}`).join('');
 
@@ -118,7 +111,7 @@ const propsReplacer = (string, props) => {
     result = replaceAll(result, prop, `{ ${propFixName(prop)} }`);
   });
 
-  return { string: result, childUsedProps };
+  return { childUsedProps, string: result };
 };
 
 const indentationBuilder = (level) => {
@@ -131,9 +124,9 @@ const indentationBuilder = (level) => {
   return indentation;
 };
 
-const TagBuilder = (tagName, close = false, props = '') => `<${close ? '/' : ''}${tagName}${props}>`;
+const tagBuilder = (tagName, close = false, props = '') => `<${close ? '/' : ''}${tagName}${props}>`;
 
-const childTagBuilder = (folder, DOM, attributes, props) => {
+export const childTagBuilder = (folder, DOM, attributes, props) => {
   let JSX = '';
   let lastDomString = false;
   let usedProps = [];
@@ -156,7 +149,7 @@ const childTagBuilder = (folder, DOM, attributes, props) => {
             childUsedProps = getChildProps(child, props);
             usedProps = [...usedProps, ...childUsedProps];
           }
-          JSX += TagBuilder(componentName, false, propsInjector(childUsedProps));
+          JSX += tagBuilder(componentName, false, propsInjector(childUsedProps));
 
           if (child && !isParentComponent(attr)) {
             domIterator(child, level + 1);
@@ -164,7 +157,7 @@ const childTagBuilder = (folder, DOM, attributes, props) => {
             lastDomString = false;
           }
 
-          JSX += TagBuilder(componentName, true);
+          JSX += tagBuilder(componentName, true);
         } else if (isValidText(text)) {
           const { string, childUsedProps } = propsReplacer(cleanString(text), props);
           JSX += string;
@@ -177,15 +170,5 @@ const childTagBuilder = (folder, DOM, attributes, props) => {
     domIterator(DOM);
   }
 
-  return { childJSX: JSX, usedProps };
-};
-
-module.exports = {
-  childImportsBuilder,
-  childTagBuilder,
-  componentNameBuilder,
-  fileObjectBuilder,
-  destructPropsBuilder,
-  styleBuilder,
-  styledTagBuilder,
+  return { usedProps, childJSX: JSX };
 };
