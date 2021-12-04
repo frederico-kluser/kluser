@@ -1,25 +1,42 @@
-# kluser CLI
+<h1 align="center">
+  Kluser
+  <br>
+</h1>
 
-A CLI for kluser.
+<h4 align="center">A Frontend Development Accelerator.</h4>
 
-## Customizing your CLI
+<p align="center">
+  <a href="https://www.linkedin.com/in/frederico-kluser/">
+    <img src="https://img.shields.io/badge/linkedin-frederico--kluser-blue">
+  </a>
+  <a href="mailto:kluserhuu@gmail.com">
+    <img src="https://img.shields.io/badge/e--mail-kluserhuu%40gmail.com-orange">
+  </a>
+  <!--  -->
+</p>
 
-Check out the documentation at https://github.com/infinitered/gluegun/tree/master/docs.
 
-## Publishing to NPM
+> A code to rule all, A code to help; A code to bring them all and in prison patterns
 
-To package your CLI up for NPM, do this:
+> -- Frederico Guilherme Kluser de Oliveira
 
-```shell
-$ npm login
-$ npm whoami
-$ npm lint
-$ npm test
-(if typescript, run `npm run build` here)
-$ npm publish
+## :sos: Road Map
+
+|                            | :facepunch: Today           | :fist: Future        |
+| -------------------------- | :----------------: | :--------------: |
+| Generate React.js          |         ✔️         |                  |
+| Live Preview               |         ✔️         |                  |
+| Config file                |         ✔️         |                  |
+| Generate React Native      |         ✔️         |                  |
+| Generate Flutter           |                    |        ❌        |
+| Drag n Drop Tool           |                    |        ❌        |
+
+## Installation
+```sh
+$ npm install -g kluser
 ```
 
-# License
-
-MIT - see LICENSE
-
+## Usage
+```sh
+$ kluser
+```
