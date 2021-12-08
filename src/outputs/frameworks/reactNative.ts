@@ -1,4 +1,7 @@
-import { attributesInjector } from '../../helpers/attributes'
+import {
+  attributesInjector,
+  kluserPropInjector
+} from '../../helpers/attributes'
 import file from '../../helpers/file'
 import { configGetAttribute } from '../../helpers/global'
 import { node } from '../../helpers/node'
@@ -38,7 +41,9 @@ const reactNative = (name, folder, styles, attr, DOM) => {
       childImportsBuilder(DOM, folder, attr),
       `import Container from './${componentName}.styled';`,
       '',
-      `const ${componentName} = ({ children }) => (`,
+      `const ${componentName} = ({ children${kluserPropInjector(
+        attr.kluser_props
+      )} }) => (`,
       `\t<Container${attributesInjector(attr)}>${childJSX}`,
       '\t\t{ children }',
       '\t</Container>',

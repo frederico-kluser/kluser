@@ -33,3 +33,13 @@ export const attributesInjector = (obj): string => {
 
   return attributes ? ` ${attributes}` : ''
 }
+
+const formatPropName = propName => propName.substring(1, propName.length)
+
+export const kluserPropInjector = props =>
+  props
+    ? props
+        .split(';')
+        .map(prop => `, ${formatPropName(prop)}`)
+        .join('')
+    : ''

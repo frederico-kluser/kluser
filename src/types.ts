@@ -5,7 +5,7 @@ export type reservedHTMLAttributesType =
   | 'class'
   | 'id'
 
-export type customObject = { [key: string]: string }
+export type customObject = { [key: string]: any }
 
 export interface HtmlNode {
   tag?: string
