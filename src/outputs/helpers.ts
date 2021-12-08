@@ -1,4 +1,4 @@
-import { isParentComponent } from '../helpers/attributes'
+import { isParentComponent, kluserPropInjector } from '../helpers/attributes'
 import { configGetAttribute } from '../helpers/global'
 import {
   cleanString,
@@ -86,7 +86,8 @@ export const childImportsBuilder = (DOM, folder, attributes) => {
   return imports ? output : ''
 }
 
-const tagBuilder = (tagName, close) => `<${close ? '/' : ''}${tagName}>`
+const tagBuilder = (tagName, close, attr) =>
+  `<${close ? '/' : ''}${tagName}${kluserPropInjector(attr.kluser_props)}>`
 
 export const childTagBuilder = (folder, DOM, attributes) => {
   let JSX = ''
@@ -97,15 +98,14 @@ export const childTagBuilder = (folder, DOM, attributes) => {
     DOM
   ) {
     const domIterator = dom => {
-      // eslint-disable-next-line complexity
       dom.forEach(({ attr = {}, child, text }) => {
         const componentName = componentNameBuilder(attr)
         if (componentName) {
-          JSX += tagBuilder(componentName, false)
+          JSX += tagBuilder(componentName, false, attr) // * prepare to inject child props
           if (child && !isParentComponent(attr)) {
             domIterator(child)
           }
-          JSX += tagBuilder(componentName, true)
+          JSX += tagBuilder(componentName, true, {})
         } else if (isValidText(text)) {
           JSX += cleanString(text)
         }

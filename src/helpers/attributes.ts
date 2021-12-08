@@ -36,10 +36,18 @@ export const attributesInjector = (obj): string => {
 
 const formatPropName = propName => propName.substring(1, propName.length)
 
-export const kluserPropInjector = props =>
+export const kluserDestructPropInjector = props =>
   props
     ? props
         .split(';')
         .map(prop => `, ${formatPropName(prop)}`)
+        .join('')
+    : ''
+
+export const kluserPropInjector = props =>
+  props
+    ? props
+        .split(';')
+        .map(prop => ` ${formatPropName(prop)}={${formatPropName(prop)}}`)
         .join('')
     : ''
