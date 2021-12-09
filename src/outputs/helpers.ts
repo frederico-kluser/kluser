@@ -87,7 +87,7 @@ export const childImportsBuilder = (DOM, folder, attributes) => {
 }
 
 const tagBuilder = (tagName, close, attr) =>
-  `<${close ? '/' : ''}${tagName}${kluserPropInjector(attr.kluser_props)}>`
+  `<${close ? '/' : ''}${tagName}${kluserPropInjector(attr.kluser_parent)}>`
 
 export const childTagBuilder = (folder, DOM, attributes) => {
   let JSX = ''

@@ -3,7 +3,6 @@ import { allPropsGetNames, allPropsGetValue } from './global'
 import { replaceAll } from './string'
 
 const reservedHTMLAttributes: reservedHTMLAttributesType[] = [
-  'kluser_props',
   'kluser_parent',
   'class',
   'id'
