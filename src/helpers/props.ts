@@ -1,4 +1,4 @@
-import { allPropsGetNames } from './global'
+import { allPropsGetNames, allPropsGetValue } from './global'
 import { replaceAll } from './string'
 
 const formatPropName = propName => propName.substring(1, propName.length)
@@ -14,13 +14,21 @@ export const kluserDestructPropInjector = props =>
         .join('')
     : ''
 
+const checkValueIsProp = propValue =>
+  allPropsGetValue(propValue) !== undefined
+    ? formatPropName(propValue)
+    : propValue
+
 const kluserPropsTypeFormater = (prop: string) => {
   const [propName, propValue] = prop.split('=')
   let result = formatPropName(propName)
 
   if (propValue && propValue !== 'true') {
     result += '='
-    result += propValue.indexOf("'") === -1 ? `{${propValue}}` : propValue
+    result +=
+      propValue.indexOf("'") === -1
+        ? `{${checkValueIsProp(propValue)}}`
+        : propValue
   }
   return result
 }

@@ -102,7 +102,7 @@ export const childTagBuilder = (folder, DOM, attributes) => {
       dom.forEach(({ attr = {}, child, text }) => {
         const componentName = componentNameBuilder(attr)
         if (componentName) {
-          JSX += tagBuilder(componentName, false, attr) // * prepare to inject child props
+          JSX += tagBuilder(componentName, false, attr)
           if (child && !isParentComponent(attr)) {
             domIterator(child)
           }
