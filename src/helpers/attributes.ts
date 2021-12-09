@@ -1,5 +1,5 @@
 import { reservedHTMLAttributesType } from '../types'
-import { allPropsGetNames, allPropsGetValue } from './global'
+import { allPropsGetNames } from './global'
 import { replaceAll } from './string'
 
 const reservedHTMLAttributes: reservedHTMLAttributesType[] = [
@@ -48,16 +48,22 @@ export const kluserDestructPropInjector = props =>
         .join('')
     : ''
 
+const kluserPropsTypeFormater = (prop: string) => {
+  const [propName, propValue] = prop.split('=')
+  let result = formatPropName(propName)
+
+  if (propValue && propValue !== 'true') {
+    result += '='
+    result += propValue.indexOf("'") === -1 ? `{${propValue}}` : propValue
+  }
+  return result
+}
+
 export const kluserPropInjector = props =>
   props
     ? props
         .split(';')
-        .map(
-          prop =>
-            ` ${formatPropName(prop)}${
-              allPropsGetValue(prop) ? `=${allPropsGetValue(prop)}` : ''
-            }`
-        )
+        .map(prop => ` ${kluserPropsTypeFormater(prop)}`)
         .join('')
     : ''
 
