@@ -1,7 +1,6 @@
 import { reservedHTMLAttributesType } from '../types'
 
 const reservedHTMLAttributes: reservedHTMLAttributesType[] = [
-  'kluser_props',
   'kluser_parent',
   'class',
   'id'

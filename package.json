@@ -1,6 +1,6 @@
 {
   "name": "kluser",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "kluser CLI",
   "types": "build/types/types.d.ts",
   "bin": {
@@ -35,14 +35,14 @@
     "gluegun": "latest",
     "html2json": "^1.0.2",
     "inquirer": "^8.2.0",
-    "npm": "^8.2.0"
+    "npm": "^8.2.0",
+    "prettier": "^1.12.1"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.11",
     "husky": "^7.0.4",
     "jest": "^24.1.0",
-    "prettier": "^1.12.1",
     "ts-jest": "^24.1.0",
     "ts-node": "^8.4.1",
     "tslint": "^6.1.3",
