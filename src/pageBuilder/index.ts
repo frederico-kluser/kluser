@@ -1,29 +1,16 @@
 import { configGetAttribute } from '../helpers/global'
 import elementBuilder from '../outputs'
 
-const elementCreator = ({
-  attr = {},
-  child,
-  props = [],
-  style = {},
-  tag,
-  type
-}: any) => {
-  let localProps = props
-
-  if (attr.kluser_props) {
-    localProps = attr.kluser_props.split(';')
-  }
-
+const elementCreator = ({ attr = {}, child, style = {}, tag, type }: any) => {
   if (child) {
     child.forEach(element => {
-      filterTags({ ...element, localProps })
+      filterTags(element)
     })
   }
 
   if (tag && attr.id) {
     const { framework } = configGetAttribute('features')
-    elementBuilder[framework](tag, type, style, attr, child, props)
+    elementBuilder[framework](tag, type, style, attr, child)
   }
 }
 

@@ -1,3 +1,5 @@
+import { kluserPropTextInjector } from './props'
+
 export const upperCaseFirstLetter = string =>
   string.charAt(0).toUpperCase() + string.slice(1)
 
@@ -19,6 +21,7 @@ export const isValidText = (str = '') => {
 }
 
 export const cleanString = string => {
+  let result = string
   let lastPosition = string.length
   const invalidCharacters = ['\n', '\t', ' ']
 
@@ -33,7 +36,10 @@ export const cleanString = string => {
     }
   }
 
-  return string.substr(0, lastPosition + 1)
+  result = string.substr(0, lastPosition + 1)
+  result = kluserPropTextInjector(result)
+
+  return result
 }
 
 const escapeRegExp = string => string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&')

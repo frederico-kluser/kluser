@@ -1,26 +1,22 @@
 import { attributesInjector } from '../../helpers/attributes'
 import file from '../../helpers/file'
 import { configGetAttribute } from '../../helpers/global'
+import { node } from '../../helpers/node'
+import { kluserDestructPropInjector } from '../../helpers/props'
 import {
   childImportsBuilder,
   childTagBuilder,
   componentNameBuilder,
-  destructPropsBuilder,
   fileObjectBuilder,
   styleBuilder,
   styledTagBuilder
 } from '../helpers'
 
-const react = (name, folder = 'ui', styles, attr, DOM, props) => {
+const react = (name, folder, styles, attr, DOM) => {
   const componentName = componentNameBuilder(attr)
-  const { source, pages } = configGetAttribute('folders')
+  const { source } = configGetAttribute('folders')
   const { jest, storybook } = configGetAttribute('features')
-  const { childJSX, usedProps } = childTagBuilder(folder, DOM, attr, props)
-
-  let passingProps = []
-  if (folder === pages || attr.kluser_parent !== undefined) {
-    passingProps = usedProps
-  }
+  const { childJSX } = childTagBuilder(folder, DOM, attr)
 
   const filePath = `${source}/${folder}/${componentName}/`
   const files = [
@@ -42,8 +38,8 @@ const react = (name, folder = 'ui', styles, attr, DOM, props) => {
       childImportsBuilder(DOM, folder, attr),
       `import Container from './${componentName}.styled';`,
       '',
-      `const ${componentName} = ({ children${destructPropsBuilder(
-        passingProps
+      `const ${componentName} = ({ children${kluserDestructPropInjector(
+        attr.kluser_parent
       )} }) => (`,
       `\t<Container${attributesInjector(attr)}>${childJSX}`,
       '\t\t{ children }',
@@ -96,8 +92,8 @@ const react = (name, folder = 'ui', styles, attr, DOM, props) => {
 
   files.forEach(({ fileName, fileContent }) => {
     file.write(fileName, fileContent, filePath)
+    node(`npx prettier --write ${filePath}${fileName}`)
   })
-  // return filePath;
 }
 
 export default react
