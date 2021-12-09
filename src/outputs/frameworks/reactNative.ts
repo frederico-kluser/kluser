@@ -1,10 +1,8 @@
-import {
-  attributesInjector,
-  kluserDestructPropInjector
-} from '../../helpers/attributes'
+import { attributesInjector } from '../../helpers/attributes'
 import file from '../../helpers/file'
 import { configGetAttribute } from '../../helpers/global'
 import { node } from '../../helpers/node'
+import { kluserDestructPropInjector } from '../../helpers/props'
 import {
   childImportsBuilder,
   childTagBuilder,

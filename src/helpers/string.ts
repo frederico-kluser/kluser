@@ -1,4 +1,4 @@
-import { kluserPropTextInjector } from './attributes'
+import { kluserPropTextInjector } from './props'
 
 export const upperCaseFirstLetter = string =>
   string.charAt(0).toUpperCase() + string.slice(1)

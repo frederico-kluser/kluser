@@ -1,5 +1,6 @@
-import { isParentComponent, kluserPropInjector } from '../helpers/attributes'
+import { isParentComponent } from '../helpers/attributes'
 import { configGetAttribute } from '../helpers/global'
+import { kluserPropInjector } from '../helpers/props'
 import {
   cleanString,
   isValidText,
