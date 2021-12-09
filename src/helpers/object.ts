@@ -1,5 +1,6 @@
 import { HtmlNode } from '../types'
 import file from './file'
+import { allPropsSetter } from './global'
 import { isValidText } from './string'
 
 const { html2json } = require('html2json')
@@ -100,14 +101,15 @@ const styleInjector = (obj, styles) => {
   }
 }
 
-const cleanDataObject = (data: HtmlNode[]): HtmlNode[] => {
+const processDataObject = (data: HtmlNode[]): HtmlNode[] => {
   let localData = data
 
   localData = localData.filter(
     ({ node, text }) => node === 'element' || isValidText(text)
   )
-  localData.forEach(({ child = [] }, index) => {
-    localData[index].child = cleanDataObject(child)
+  localData.forEach(({ attr = {}, child = [] }, index) => {
+    allPropsSetter(attr.kluser_props)
+    localData[index].child = processDataObject(child)
   })
 
   return localData
@@ -125,7 +127,7 @@ export const getData = (): HtmlNode[] => {
   const cssContent = css2json(files.css)
   styleInjector(bodyContent, cssContent)
 
-  const cleanedData = cleanDataObject(bodyContent.child)
+  const processedData = processDataObject(bodyContent.child)
 
-  return cleanedData
+  return processedData
 }
