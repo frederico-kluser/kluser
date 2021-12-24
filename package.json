@@ -14,7 +14,7 @@
     "copy-templates": "if [ -e ./src/templates ]; then cp -a ./src/templates ./build/; fi",
     "build": "yarn format && yarn lint && yarn clean-build && yarn compile && yarn copy-templates",
     "prepublishOnly": "yarn build",
-    "test": "prettier --write **/*.{js,ts,tsx,json} && tslint -p . && jest",
+    "test": "prettier --write **/*.{js,ts,tsx,json} && tslint -p . && jest --coverage",
     "watch": "jest --watch",
     "snapupdate": "jest --updateSnapshot",
     "coverage": "jest --coverage",

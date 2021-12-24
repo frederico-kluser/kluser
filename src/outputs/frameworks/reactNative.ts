@@ -40,7 +40,7 @@ const reactNative = (name, folder, styles, attr, DOM) => {
       `import Container from './${componentName}.styled';`,
       '',
       `const ${componentName} = ({ children${kluserDestructPropInjector(
-        attr.kluser_parent
+        attr.kluser_props
       )} }) => (`,
       `\t<Container${attributesInjector(attr)}>${childJSX}`,
       '\t\t{ children }',

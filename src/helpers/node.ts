@@ -5,8 +5,8 @@ const { cwd } = require('process')
 const inquirer = require('inquirer')
 const { exec } = require('child_process') // have problems to use yarn
 
-export const node = async (command = 'ls -la') => {
-  const promise = new Promise((resolve, reject) => {
+export const node = async (command = 'ls -la') =>
+  new Promise((resolve, reject) => {
     exec(command, (error, stdout, stderr) => {
       if (error) {
         reject(new Error(`error: ${error.message}`))
@@ -20,15 +20,12 @@ export const node = async (command = 'ls -la') => {
     })
   })
 
-  return promise
-}
-
 export const prompt = async (
   message = 'Choose an option',
   type = 'input',
   choices = []
-) => {
-  const promise = new Promise((resolve, reject) => {
+) =>
+  new Promise((resolve, reject) => {
     inquirer
       .prompt([
         {
@@ -41,9 +38,6 @@ export const prompt = async (
       .then(({ result }) => resolve(result))
       .catch(reject)
   })
-
-  return promise
-}
 
 export const npmExec = async commands => {
   let response: any = ''
