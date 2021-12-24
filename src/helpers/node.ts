@@ -70,6 +70,7 @@ const packageJsonConfig = async () => {
   packageJson.resolutions['styled-components'] = '^5'
   console.log(JSON.stringify(packageJson))
   write('package.json', JSON.stringify(packageJson), `${cwd()}/`)
+  node(`npx prettier --write ${cwd()}/package.json`)
 }
 
 export const setupProject = async () => {
