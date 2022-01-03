@@ -99,8 +99,6 @@ const react = (name, folder, styles, attr, DOM) => {
     file.write(fileName, fileContent, filePath)
     node(`npx prettier --write ${filePath}${fileName}`)
   })
-
-  console.log(name, attr)
 }
 
 export default react
