@@ -1,9 +1,5 @@
 // export types
-export type reservedHTMLAttributesType =
-  | 'kluser_isolate'
-  | 'kluser_props'
-  | 'class'
-  | 'id'
+export type reservedHTMLAttributesType = 'kluser_props' | 'class' | 'id'
 
 export type customObject = { [key: string]: any }
 

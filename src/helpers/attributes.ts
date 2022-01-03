@@ -1,7 +1,6 @@
 import { reservedHTMLAttributesType } from '../types'
 
 const reservedHTMLAttributes: reservedHTMLAttributesType[] = [
-  'kluser_isolate',
   'kluser_props',
   'class',
   'id'
@@ -20,7 +19,7 @@ export const isReservedWords = (word: string): boolean => {
 }
 
 export const isParentComponent = (attribute: any = {}) =>
-  attribute.kluser_isolate !== undefined
+  attribute.kluser_props !== undefined
 
 export const attributesInjector = (obj): string => {
   let attributes = '' // space from the tag name

@@ -7,47 +7,41 @@ import { reservedHTMLAttributesType } from './../../src/types'
 
 describe('test isReservedWords', () => {
   it('check is the word is reserved', () => {
-    expect.assertions(4)
+    expect.assertions(3)
 
     // arrange
-    const firstWord: reservedHTMLAttributesType = 'kluser_isolate'
+    const firstWord: reservedHTMLAttributesType = 'id'
     const secondWord: reservedHTMLAttributesType = 'kluser_props'
     const thirdWord: reservedHTMLAttributesType = 'class'
-    const fourthWord: reservedHTMLAttributesType = 'id'
 
     // act
     const resultFirstWord = isReservedWords(firstWord)
     const resultSecondWord = isReservedWords(secondWord)
     const resultThirdWord = isReservedWords(thirdWord)
-    const resultFourthWord = isReservedWords(fourthWord)
 
     // assertions
     expect(resultFirstWord).toBeTruthy()
     expect(resultSecondWord).toBeTruthy()
     expect(resultThirdWord).toBeTruthy()
-    expect(resultFourthWord).toBeTruthy()
   })
 
   it('check is the word is not reserved', () => {
-    expect.assertions(4)
+    expect.assertions(3)
 
     // arrange
     const firstWord: string = 'style'
     const secondWord: string = 'href'
     const thirdWord: string = 'onClick'
-    const fourthWord: string = 'onChange'
 
     // act
     const resultFirstWord = isReservedWords(firstWord)
     const resultSecondWord = isReservedWords(secondWord)
     const resultThirdWord = isReservedWords(thirdWord)
-    const resultFourthWord = isReservedWords(fourthWord)
 
     // assertions
     expect(resultFirstWord).toBeFalsy()
     expect(resultSecondWord).toBeFalsy()
     expect(resultThirdWord).toBeFalsy()
-    expect(resultFourthWord).toBeFalsy()
   })
 })
 
@@ -67,7 +61,7 @@ describe('test isParentComponent', () => {
     expect.assertions(1)
 
     // arrange
-    const sonElement = { kluser_isolate: true }
+    const sonElement = { kluser_props: '' }
 
     // act
     const result = isParentComponent(sonElement)
@@ -83,7 +77,7 @@ describe('test attributesInjector', () => {
 
     // arrange
     const obj = {
-      kluser_isolate: true,
+      kluser_props: '',
       src: 'www.google.com'
     }
 
@@ -99,7 +93,6 @@ describe('test attributesInjector', () => {
 
     // arrange
     const obj = {
-      kluser_isolate: true,
       kluser_props: true
     }
 
