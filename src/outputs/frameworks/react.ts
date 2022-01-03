@@ -2,7 +2,10 @@ import { attributesInjector } from '../../helpers/attributes'
 import file from '../../helpers/file'
 import { configGetAttribute } from '../../helpers/global'
 import { node } from '../../helpers/node'
-import { kluserDestructPropInjector } from '../../helpers/props'
+import {
+  kluserDestructPropInjector,
+  kluserPropStorybookInjector
+} from '../../helpers/props'
 import {
   childImportsBuilder,
   childTagBuilder,
@@ -73,15 +76,21 @@ const react = (name, folder, styles, attr, DOM) => {
   if (storybook) {
     files.push(
       fileObjectBuilder(`${componentName}.stories.jsx`, [
-        "import { Story, Meta } from '@storybook/react/types-6-0';",
-        `import ${componentName} from '.';`,
+        "import React from 'react';",
+        '',
+        `import ${componentName} from './${componentName}';`,
         '',
         'export default {',
         `\ttitle: '${componentName}',`,
-        `\tcomponent: ${componentName}`,
-        '} as Meta;',
+        `\tcomponent: ${componentName},`,
+        '};',
         '',
-        `export const Basic: Story = () => <${componentName} />;`
+        `const Template = (args) => <${componentName} {...args}>{args.children}</${componentName}>;`,
+        '',
+        'export const Default = Template.bind({});',
+        'Default.args = {',
+        `\tchildren: ''${kluserPropStorybookInjector(attr.kluser_props)}`,
+        '};'
       ])
     )
   }
@@ -90,6 +99,8 @@ const react = (name, folder, styles, attr, DOM) => {
     file.write(fileName, fileContent, filePath)
     node(`npx prettier --write ${filePath}${fileName}`)
   })
+
+  console.log(name, attr)
 }
 
 export default react

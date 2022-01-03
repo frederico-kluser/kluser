@@ -2,7 +2,10 @@ import { attributesInjector } from '../../helpers/attributes'
 import file from '../../helpers/file'
 import { configGetAttribute } from '../../helpers/global'
 import { node } from '../../helpers/node'
-import { kluserDestructPropInjector } from '../../helpers/props'
+import {
+  kluserDestructPropInjector,
+  kluserPropStorybookInjector
+} from '../../helpers/props'
 import {
   childImportsBuilder,
   childTagBuilder,
@@ -73,16 +76,22 @@ const reactNative = (name, folder, styles, attr, DOM) => {
   }
   if (storybook) {
     files.push(
-      fileObjectBuilder(`${componentName}.stories.js`, [
-        "import { Story, Meta } from '@storybook/react/types-6-0';",
-        `import ${componentName} from '.';`,
+      fileObjectBuilder(`${componentName}.stories.jsx`, [
+        "import React from 'react';",
+        '',
+        `import ${componentName} from './${componentName}';`,
         '',
         'export default {',
         `\ttitle: '${componentName}',`,
-        `\tcomponent: ${componentName}`,
-        '} as Meta;',
+        `\tcomponent: ${componentName},`,
+        '};',
         '',
-        `export const Basic: Story = () => <${componentName} />;`
+        `const Template = (args) => <${componentName} {...args}>{args.children}</${componentName}>;`,
+        '',
+        'export const Default = Template.bind({});',
+        'Default.args = {',
+        `\tchildren: ''${kluserPropStorybookInjector(attr.kluser_props)}`,
+        '};'
       ])
     )
   }
