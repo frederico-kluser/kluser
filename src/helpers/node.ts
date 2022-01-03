@@ -65,9 +65,14 @@ export const npmExec = async commands => {
 const packageJsonConfig = async () => {
   const { read, write } = file
   const packageJson = JSON.parse(read(`${cwd()}/package.json`))
+
   packageJson.resolutions = packageJson.resolutions || {}
   packageJson.dependencies['styled-components'] = '^5.3.3'
   packageJson.resolutions['styled-components'] = '^5'
+
+  packageJson.devDependencies['prettier'] = '^1.12.1'
+  packageJson.devDependencies['jest'] = '^24.1.0'
+
   console.log(JSON.stringify(packageJson))
   write('package.json', JSON.stringify(packageJson), `${cwd()}/`)
   node(`npx prettier --write ${cwd()}/package.json`)
@@ -104,4 +109,5 @@ export const setupProject = async () => {
   write('index.html', html, `${cwd()}/kluser/`)
   write('style.css', css, `${cwd()}/kluser/`)
   write('/.kluser.json', kluser, `${cwd()}/kluser/`)
+  await npmExec(['npm install'])
 }

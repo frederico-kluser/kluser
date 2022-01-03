@@ -54,23 +54,19 @@ const react = (name, folder, styles, attr, DOM) => {
   if (jest) {
     files.push(
       fileObjectBuilder(`${componentName}.test.jsx`, [
-        "import { render, screen } from '@testing-library/react';",
-        "import { ReactNode } from 'react';",
-        "import { ThemeProvider } from 'styled-components';",
-        "import { theme } from '../../../styles/theme';",
-        `import ${componentName} from '.';`,
+        "import React from 'react'",
+        "import renderer from 'react-test-renderer'",
+        `import ${componentName} from './${componentName}'`,
         '',
-        'const renderComponent = (children: ReactNode) =>',
-        '\trender(<ThemeProvider theme={theme}>{children}</ThemeProvider>);',
+        `describe('${componentName} page', () => {`,
+        `\tit('${componentName} snapshot testing', () => {`,
+        '\t\texpect.assertions(1)',
         '',
-        `describe('<${componentName} />', () => {`,
-        "\tit('Should render the heading', () => {",
-        `\t\trenderComponent(<${componentName} />);`,
+        `\t\tconst tree = renderer.create(<${componentName} />).toJSON()`,
         '',
-        `\t\texpect(screen.getByText(/${componentName}/i)).toBeInTheDocument();`,
+        '\t\texpect(tree).toMatchSnapshot()',
         '\t})',
-        '})',
-        ''
+        '})'
       ])
     )
   }
