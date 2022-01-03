@@ -33,7 +33,7 @@ const questions = {
 const command: GluegunCommand = {
   name: 'kluser',
   run: async () => {
-    if (!file.exists('./kluser')) {
+    if (!file.exists('./kluser') || !file.exists('./kluser/.kluser.json')) {
       await setupProject()
     }
 
