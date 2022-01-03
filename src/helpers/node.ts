@@ -70,6 +70,7 @@ const packageJsonConfig = async () => {
   packageJson.dependencies['styled-components'] = '^5.3.3'
   packageJson.resolutions['styled-components'] = '^5'
 
+  packageJson.devDependencies = packageJson.devDependencies || {}
   packageJson.devDependencies['prettier'] = '^1.12.1'
   packageJson.devDependencies['jest'] = '^24.1.0'
 
