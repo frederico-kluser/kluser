@@ -67,6 +67,7 @@ const packageJsonConfig = async () => {
   const packageJson = JSON.parse(read(`${cwd()}/package.json`))
 
   packageJson.resolutions = packageJson.resolutions || {}
+  packageJson.dependencies = packageJson.dependencies || {}
   packageJson.dependencies['styled-components'] = '^5.3.3'
   packageJson.resolutions['styled-components'] = '^5'
 
