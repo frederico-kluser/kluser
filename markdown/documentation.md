@@ -24,7 +24,7 @@ $ kluser
 - Select the default folder where the components and pages will be generated (default: 'src').
 - Choose whether you want to generate a Build or enter the Live Preview mode to see the default structure being generated inside the default folder.
 
-![Alt Text](./usage.gif)
+![Alt Text](usage.gif)
 
 Note that a folder called kluser was created within your current directory.
 

@@ -1,6 +1,6 @@
 {
   "name": "kluser",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "kluser CLI",
   "types": "build/types/types.d.ts",
   "bin": {
