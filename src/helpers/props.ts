@@ -3,10 +3,13 @@ import { replaceAll } from './string'
 
 const formatPropName = propName => propName.substring(1, propName.length)
 
-const valueTypeFormat = value =>
-  value.indexOf("'") !== -1 || value.indexOf('"') !== -1
+const valueTypeFormat = (value, jsObj = false) => {
+  const javascriptObject = value2 => (jsObj ? value2 : `{${value2}}`)
+
+  return value.indexOf("'") !== -1 || value.indexOf('"') !== -1
     ? value
-    : `{${checkValueIsProp(value)}}`
+    : javascriptObject(checkValueIsProp(value))
+}
 
 const propsFormatter = (props, func, separator = '') =>
   props
@@ -46,7 +49,7 @@ export const kluserPropStorybookInjector = props =>
     let result = `,\n\t${formatPropName(propName)}`
 
     result += ': '
-    result += valueTypeFormat(propValue)
+    result += valueTypeFormat(propValue, true)
 
     return result
   })
