@@ -51,13 +51,15 @@ File for styles editing (within index.html Other style files can be created)
 
 ### how create pages ?
 
-suponhamos que queremos criar uma página chamada 'Info'. basicamente, precisamos criar uma tag html, diretamente dentro do body (e não dentro de outras tags) passando o nome da página como id, ex:
+Suppose we want to create a page called 'Info'. Basically, we need to create an HTML tag directly inside the body passing the name of the page as **id**, ex:
 
 ```html
-<div id="Info"></div>
+<body>
+  <div id="Info"></div>
+</body>
 ```
 
-como nosso código final usa o [styled-components](https://styled-components.com/) para criar estilos, a tag escolhida será usada no styled (styled.TAG``) ex:
+As our final code uses [styled-components](https://styled-components.com/) to create styles, the chosen tag will be used in styled (styled.TAG``) ex:
 
 ```
 const Container = styled.div``;
@@ -73,7 +75,7 @@ const Info = ({ children }) => (
 );
 ```
 
-para o framework React Native, possuimos uma limitação de tags aceitas, qualquer uma que não seja uma das tags abaixo será usada de maneira literal:
+For Framework React Native, we have a limitation of accepted tags, any one other than one of the tags below will be used literally:
 
 - div
 - span
@@ -94,7 +96,7 @@ para o framework React Native, possuimos uma limitação de tags aceitas, qualqu
 
 ### how create components ?
 
-da mesma maneira de criar uma página, mas precisa ser filha de uma página ou de outro componente, ex:
+similarly to create a page, but need to be the child of a page or another component, ex:
 
 ```html
 <div id="Info">
@@ -130,9 +132,9 @@ inside the style.css file, just write your styles using id as selector, ex:
 
 ## Create complex components
 
-Usando o [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) como analogia, vemos que todos nossos componentes se parecem com atomos (componentes que não encapsulam outros), o que torna nossas páginas mais verbosas. Para criar componentes moleculas (componentes que encapsulam outros), precisamos passar o attributo kluser_props para a tag html.
+Using [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) as an analogy, we see that all our components look like atoms (components that do not encapsulate others), which makes our page more verbose. To create molecule components (components that encapsulate others), we need to pass the kluser_props atttribute to the HTML tag.
 
-**Sem o attributo kluser_props, ex:**
+**Without the attribute kluser_props, ex:**
 
 ```html
 <div id="Info">
@@ -155,7 +157,7 @@ const Info = ({ children }) => (
 );
 ```
 
-**Com o attributo kluser_props, ex:**
+**With the attribute kluser_props, ex:**
 
 ```html
 <div id="Info">
@@ -173,4 +175,51 @@ const Info = ({ children }) => (
     {children}
   </Container>
 );
+```
+
+## Passing inner tag props
+
+To pass props in our components we need within the kluser_props attribute, set the prop name with the dollar sign '\$' passing a value with the equal sign '=' and put this props within the child component, ex:
+
+```html
+<div id="Home">
+  <div id="Header" kluser_props="$pageName='Info'">
+    <h1 id="Title">$pageName Page</h1>
+  </div>
+</div>
+```
+
+**result**:
+
+###### source/pages/Home/Home.jsx
+
+```
+const Home = ({ children }) => (
+  <Container>
+    <Header pageName="Home"></Header>
+    {children}
+  </Container>
+);
+```
+
+###### source/components/Header/Header.jsx
+
+```
+const Header = ({ children, pageName }) => (
+  <Container>
+    <Title>{pageName} Page</Title>
+    {children}
+  </Container>
+);
+```
+
+### passando multiplas props ?
+
+only separates each prop with semicolon, ex:
+
+```html
+<div
+  id="Header"
+  kluser_props="$firstName='Frederico';$age=27;brazilian=true"
+></div>
 ```
