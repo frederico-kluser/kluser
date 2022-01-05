@@ -6,37 +6,113 @@
 <h4 align="center">A Frontend Development Accelerator.</h4>
 
 <p align="center">
-  <a href="https://www.linkedin.com/in/frederico-kluser/">
-    <img src="https://img.shields.io/badge/linkedin-frederico--kluser-blue">
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/Licence-MIT-yellow">
   </a>
-  <a href="mailto:kluserhuu@gmail.com">
-    <img src="https://img.shields.io/badge/e--mail-kluserhuu%40gmail.com-orange">
+  <a href="https://www.paypal.com/donate/?business=38FUTZRLYFZA2&no_recurring=0&currency_code=USD">
+    <img src="https://img.shields.io/badge/Donation-Paypal-blue">
   </a>
   <!--  -->
 </p>
 
+> design needs to be quick and succinct
+>
+> -- <cite>Frederico G K Oliveira</cite>
 
-> A code to rule all, A code to help; A code to bring them all and in prison patterns
+## 🧰 Features
 
-> -- Frederico Guilherme Kluser de Oliveira
+- Convert HTML/CSS to (React, React Native)
+- Organize style
+- Generate Jest
+- Generate Storybook
+- Realtime conversion mode
+- Matrix loading animations :P
 
-## :sos: Road Map
+## 📈 Advantage
 
-|                            | :facepunch: Today           | :fist: Future        |
-| -------------------------- | :----------------: | :--------------: |
-| Generate React.js          |         ✔️         |                  |
-| Live Preview               |         ✔️         |                  |
-| Config file                |         ✔️         |                  |
-| Generate React Native      |         ✔️         |                  |
-| Generate Flutter           |                    |        ❌        |
-| Drag n Drop Tool           |                    |        ❌        |
+##### With short and simple html/css code creates a professional structure.
 
-## Installation
+###### write this:
+
+```sh
+<body>
+	<div id="Home">
+		<div id="Header">
+			<h1 id="Title">Home Page</h1>
+		</div>
+	</div>
+</body>
+```
+
+###### receive this:
+
+```sh
+source
+├── components
+│   ├── Header
+│   │   ├── Header.jsx
+│   │   ├── Header.stories.jsx
+│   │   ├── Header.styled.js
+│   │   ├── Header.test.jsx
+│   │   └── index.js
+│   └── Title
+│       ├── Title.jsx
+│       ├── Title.stories.jsx
+│       ├── Title.styled.js
+│       ├── Title.test.jsx
+│       └── index.js
+└── pages
+    └── Home
+        ├── Home.jsx
+        ├── Home.stories.jsx
+        ├── Home.styled.js
+        ├── Home.test.jsx
+        └── index.js
+
+```
+
+## 🔧 Installation
+
 ```sh
 $ npm install -g kluser
 ```
 
-## Usage
+## 🛠️ Usage
+
 ```sh
 $ kluser
 ```
+
+###### Create new project
+
+![Alt Text](./markdown/usage.gif)
+
+###### With the project created the same command will render the project or activate live preview mode
+
+![Alt Text](./markdown/render.gif)
+
+## 👨‍🏫 Documentation
+
+- [Complete Guide](./markdown/documentation.md)
+
+## 🆘 Roadmap
+
+|                       | 🤙 Today | 🤞 Future |
+| --------------------- | :------: | :-------: |
+| Generate React.js     |    ✔️    |           |
+| Live Preview          |    ✔️    |           |
+| Config file           |    ✔️    |           |
+| Generate React Native |    ✔️    |           |
+| Props support         |    ✔️    |           |
+| Support Atomic Design |          |    ❌     |
+| State support         |          |    ❌     |
+| Generate Flutter      |          |    ❌     |
+| Drag n Drop Tool      |          |    ❌     |
+
+## 👂 Feedback
+
+If you have any feedback, please reach out to us at kluserhuu@gmail.com
+
+## 🧔 Author
+
+- [Frederico Guilherme Klüser de Oliveira](https://www.linkedin.com/in/frederico-kluser/)
