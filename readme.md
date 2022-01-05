@@ -85,15 +85,15 @@ $ kluser
 
 ## 👨‍🏫 Documentation
 
-- [Complete Guide](markdown/documentation.md)
+- [Complete Guide](https://github.com/frederico-kluser/kluser/blob/master/markdown/documentation.md)
 
 ###### Create new project
 
-![Alt Text](markdown/usage.gif)
+![Alt Text](https://raw.githubusercontent.com/frederico-kluser/kluser/master/markdown/usage.gif)
 
 ###### With the project created the same command will render the project or activate live preview mode
 
-![Alt Text](markdown/render.gif)
+![Alt Text](https://raw.githubusercontent.com/frederico-kluser/kluser/master/markdown/render.gif)
 
 ## 🆘 Roadmap
 
