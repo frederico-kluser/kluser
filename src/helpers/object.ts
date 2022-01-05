@@ -108,7 +108,16 @@ const processDataObject = (data: HtmlNode[]): HtmlNode[] => {
     ({ node, text }) => node === 'element' || isValidText(text)
   )
   localData.forEach(({ attr = {}, child = [] }, index) => {
-    allPropsSetter(attr.kluser_parent)
+    Object.keys(attr).forEach(key => {
+      if (typeof attr[key] === 'object') {
+        attr[key] = attr[key].join(' ')
+        localData[index].attr[key] = attr[key]
+      }
+    })
+
+    if (attr.kluser_props) {
+      allPropsSetter(attr.kluser_props)
+    }
     localData[index].child = processDataObject(child)
   })
 

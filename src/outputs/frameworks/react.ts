@@ -2,7 +2,10 @@ import { attributesInjector } from '../../helpers/attributes'
 import file from '../../helpers/file'
 import { configGetAttribute } from '../../helpers/global'
 import { node } from '../../helpers/node'
-import { kluserDestructPropInjector } from '../../helpers/props'
+import {
+  kluserDestructPropInjector,
+  kluserPropStorybookInjector
+} from '../../helpers/props'
 import {
   childImportsBuilder,
   childTagBuilder,
@@ -39,7 +42,7 @@ const react = (name, folder, styles, attr, DOM) => {
       `import Container from './${componentName}.styled';`,
       '',
       `const ${componentName} = ({ children${kluserDestructPropInjector(
-        attr.kluser_parent
+        attr.kluser_props
       )} }) => (`,
       `\t<Container${attributesInjector(attr)}>${childJSX}`,
       '\t\t{ children }',
@@ -54,38 +57,40 @@ const react = (name, folder, styles, attr, DOM) => {
   if (jest) {
     files.push(
       fileObjectBuilder(`${componentName}.test.jsx`, [
-        "import { render, screen } from '@testing-library/react';",
-        "import { ReactNode } from 'react';",
-        "import { ThemeProvider } from 'styled-components';",
-        "import { theme } from '../../../styles/theme';",
-        `import ${componentName} from '.';`,
+        "import React from 'react'",
+        "import renderer from 'react-test-renderer'",
+        `import ${componentName} from './${componentName}'`,
         '',
-        'const renderComponent = (children: ReactNode) =>',
-        '\trender(<ThemeProvider theme={theme}>{children}</ThemeProvider>);',
+        `describe('${componentName} page', () => {`,
+        `\tit('${componentName} snapshot testing', () => {`,
+        '\t\texpect.assertions(1)',
         '',
-        `describe('<${componentName} />', () => {`,
-        "\tit('Should render the heading', () => {",
-        `\t\trenderComponent(<${componentName} />);`,
+        `\t\tconst tree = renderer.create(<${componentName} />).toJSON()`,
         '',
-        `\t\texpect(screen.getByText(/${componentName}/i)).toBeInTheDocument();`,
+        '\t\texpect(tree).toMatchSnapshot()',
         '\t})',
-        '})',
-        ''
+        '})'
       ])
     )
   }
   if (storybook) {
     files.push(
       fileObjectBuilder(`${componentName}.stories.jsx`, [
-        "import { Story, Meta } from '@storybook/react/types-6-0';",
-        `import ${componentName} from '.';`,
+        "import React from 'react';",
+        '',
+        `import ${componentName} from './${componentName}';`,
         '',
         'export default {',
         `\ttitle: '${componentName}',`,
-        `\tcomponent: ${componentName}`,
-        '} as Meta;',
+        `\tcomponent: ${componentName},`,
+        '};',
         '',
-        `export const Basic: Story = () => <${componentName} />;`
+        `const Template = (args) => <${componentName} {...args}>{args.children}</${componentName}>;`,
+        '',
+        'export const Default = Template.bind({});',
+        'Default.args = {',
+        `\tchildren: ''${kluserPropStorybookInjector(attr.kluser_props)}`,
+        '};'
       ])
     )
   }
