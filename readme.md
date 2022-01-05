@@ -34,19 +34,19 @@
 
 ###### write this:
 
-```sh
+```html
 <body>
-	<div id="Home">
-		<div id="Header">
-			<h1 id="Title">Home Page</h1>
-		</div>
-	</div>
+  <div id="Home">
+    <div id="Header">
+      <h1 id="Title">Home Page</h1>
+    </div>
+  </div>
 </body>
 ```
 
 ###### receive this:
 
-```sh
+```
 source
 ├── components
 │   ├── Header
@@ -83,6 +83,10 @@ $ npm install -g kluser
 $ kluser
 ```
 
+## 👨‍🏫 Documentation
+
+- [Complete Guide](./markdown/documentation.md)
+
 ###### Create new project
 
 ![Alt Text](./markdown/usage.gif)
@@ -90,10 +94,6 @@ $ kluser
 ###### With the project created the same command will render the project or activate live preview mode
 
 ![Alt Text](./markdown/render.gif)
-
-## 👨‍🏫 Documentation
-
-- [Complete Guide](./markdown/documentation.md)
 
 ## 🆘 Roadmap
 
