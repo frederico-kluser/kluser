@@ -128,7 +128,7 @@ inside the style.css file, just write your styles using id as selector, ex:
 }
 ```
 
-###### you can use any kind os css selector, but is recommended to use id
+###### you can use any kind of css selector, but is recommended to use id
 
 ## Create complex components
 
@@ -213,7 +213,7 @@ const Header = ({ children, pageName }) => (
 );
 ```
 
-### passando multiplas props ?
+### Passing multiple props ?
 
 only separates each prop with semicolon, ex:
 
