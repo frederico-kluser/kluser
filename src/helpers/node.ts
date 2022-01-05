@@ -74,7 +74,6 @@ const packageJsonConfig = async () => {
   packageJson.devDependencies['prettier'] = '^1.12.1'
   packageJson.devDependencies['jest'] = '^24.1.0'
 
-  console.log(JSON.stringify(packageJson))
   write('package.json', JSON.stringify(packageJson), `${cwd()}/`)
   node(`npx prettier --write ${cwd()}/package.json`)
 }
