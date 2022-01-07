@@ -220,6 +220,6 @@ only separates each prop with semicolon, ex:
 ```html
 <div
   id="Header"
-  kluser_props="$firstName='Frederico';$age=27;brazilian=true"
+  kluser_props="$firstName='Frederico';$age=27;$brazilian=true"
 ></div>
 ```
