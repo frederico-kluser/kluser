@@ -13,20 +13,20 @@ Globally install kluser in your system.
 $ npm install -g kluser
 ```
 
-In a React or React Native project, use the command below to generate the local configuration files of your project.
+In a React or React Native project, use the following command to generate your project's local configuration files.
 
 ```sh
 $ kluser
 ```
 
-- Use the keyboard arrows to choose between React or React Native as output and press ENTER.
-- Add the desired features pressing SPACE and ENTER to continue.
-- Select the default folder where the components and pages will be generated (default: 'src').
-- Choose whether you want to generate a Build or enter the Live Preview mode to see the default structure being generated inside the default folder.
+- Use the keyboard arrows to choose between React or React Native as the output and press ENTER.
+- Add the desired features by pressing SPACE and ENTER to continue.
+- Select the default folder in which to generate the components and pages (default: 'src').
+- Choose whether to create a build or enter Live Preview mode to see the default structure that will be created in the default folder.
 
 ![Alt Text](usage.gif)
 
-Note that a folder called kluser was created within your current directory.
+Note that a folder named kluser has been created in your current directory.
 
 ```
 kluser
@@ -51,7 +51,7 @@ File for styles editing (within index.html Other style files can be created)
 
 ### how create pages ?
 
-Suppose we want to create a page called 'Info'. Basically, we need to create an HTML tag directly inside the body passing the name of the page as **id**, ex:
+Let us say we want to create a page called 'Info'. To do this, we need to create an HTML tag directly in the body and pass the name of the page as **id**
 
 ```html
 <body>
@@ -59,7 +59,7 @@ Suppose we want to create a page called 'Info'. Basically, we need to create an 
 </body>
 ```
 
-As our final code uses [styled-components](https://styled-components.com/) to create styles, the chosen tag will be used in styled (styled.TAG``) ex:
+Since our final code uses [styled-components](https://styled-components.com/) to create styles, the chosen tag is used in styled (styled. TAG'')
 
 ```
 const Container = styled.div``;
@@ -75,7 +75,7 @@ const Info = ({ children }) => (
 );
 ```
 
-For Framework React Native, we have a limitation of accepted tags, any one other than one of the tags below will be used literally:
+For the React Native framework, we have a restriction on the accepted tags. Any tag other than one of those listed below will be used
 
 - div
 - span
@@ -96,7 +96,7 @@ For Framework React Native, we have a limitation of accepted tags, any one other
 
 ### how create components ?
 
-similarly to create a page, but need to be the child of a page or another component, ex:
+similar to creating a page, but you must be the child of a page or other component
 
 ```html
 <div id="Info">
@@ -117,7 +117,7 @@ const Info = ({ children }) => (
 
 ### how styling pages/components ?
 
-inside the style.css file, just write your styles using id as selector, ex:
+inside the style.css file, just write your styles with id as selector
 
 ```css
 #Info {
@@ -132,7 +132,7 @@ inside the style.css file, just write your styles using id as selector, ex:
 
 ## Create complex components
 
-Using [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) as an analogy, we see that all our components look like atoms (components that do not encapsulate others), which makes our page more verbose. To create molecule components (components that encapsulate others), we need to pass the kluser_props atttribute to the HTML tag.
+Using [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) as an analogy, we see that all of our components look like atoms (components that do not encapsulate others), which makes our page more detailed. To create molecule components (components that encapsulate other components), we need to pass the kluser_props attribute to the HTML tag.
 
 **Without the attribute kluser_props, ex:**
 
@@ -179,7 +179,7 @@ const Info = ({ children }) => (
 
 ## Passing inner tag props
 
-To pass props in our components we need within the kluser_props attribute, set the prop name with the dollar sign '\$' passing a value with the equal sign '=' and put this props within the child component, ex:
+To pass props in our components, inside the kluser_props attribute we need to set the prop name with the dollar sign '\$' and pass a value with the equal sign '=' and insert this prop into the child component
 
 ```html
 <div id="Home">
@@ -215,7 +215,7 @@ const Header = ({ children, pageName }) => (
 
 ### Passing multiple props ?
 
-only separates each prop with semicolon, ex:
+separates only each prop with semicolon:
 
 ```html
 <div
